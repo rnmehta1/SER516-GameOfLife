@@ -7,7 +7,7 @@ public class Canvas extends JFrame {
 
     public int mx = -100;
     public int my = -100;
-    boolean cells[][] = new boolean[41][21];
+    boolean cells[][] = new boolean[40][20];
     int spacing=1;
 
     public Canvas() {
@@ -19,8 +19,8 @@ public class Canvas extends JFrame {
         this.addMouseListener(paintCell);
         Move move = new Move();
         this.addMouseMotionListener(move);
-        for (int x = 0; x <= 40; x ++) {
-            for (int y = 0; y <= 20; y ++) {
+        for (int x = 0; x < 40; x ++) {
+            for (int y = 0; y < 20; y ++) {
                 cells[x][y] = false;
             }
         }
@@ -31,9 +31,9 @@ public class Canvas extends JFrame {
 
         public void paint(Graphics g) {
             g.setColor(Color.DARK_GRAY);
-            g.fillRect(0,30,1230,630);
-            for (int x = 0; x <= 40; x++) {
-                for (int y = 0; y <= 20; y ++) {
+            g.fillRect(0,30,1200,600);
+            for (int x = 0; x < 40; x++) {
+                for (int y = 0; y < 20; y ++) {
                     g.setColor(Color.gray);
                     if (mx >= spacing+x*30 && mx < x*30+30-spacing && my>=spacing+y*30+30+26 && my<spacing+y*30+26+30+30-2*spacing) {
                         g.setColor(Color.red);
@@ -66,11 +66,6 @@ public class Canvas extends JFrame {
 
         @Override
         public void mouseMoved(MouseEvent e) {
-            System.out.println("mouse moved");
-//            mx=e.getX();
-//            my=e.getY();
-//            repaint();
-//            System.out.println("X:"+mx+" Y:"+my);
         }
     }
 
