@@ -14,7 +14,7 @@ public class Canvas extends JFrame {
         setUpButtons();
         setVisible(true);
         Grid grid=new Grid();
-        this.setContentPane(grid);
+        this.add(grid);
         PaintCell paintCell = new PaintCell();
         this.addMouseListener(paintCell);
         Move move = new Move();
