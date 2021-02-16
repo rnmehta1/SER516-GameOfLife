@@ -20,7 +20,7 @@ public class Canvas extends JFrame {
         Move move = new Move();
         this.addMouseMotionListener(move);
         for (int x = 0; x < 40; x ++) {
-            for (int y = 0; y < 20; y ++) {
+            for (int y = 0; y <20; y ++) {
                 cells[x][y] = false;
             }
         }
