@@ -1,7 +1,5 @@
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import javax.swing.*;
 public class Canvas extends JFrame {
 
@@ -9,8 +7,10 @@ public class Canvas extends JFrame {
     public int my = -100;
     boolean cells[][] = new boolean[1201][601];
 
+
     public Canvas() {
         setSize(1440, 900);
+        setUpButtons();
         setVisible(true);
         Grid grid=new Grid();
         add(grid);
@@ -24,6 +24,37 @@ public class Canvas extends JFrame {
             }
         }
 
+    }
+
+    public void setUpButtons(){
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setPreferredSize(new Dimension(1440, 200));
+        JButton startPauseButton = new JButton("Start");
+        JButton resetButton = new JButton("Reset");
+
+        startPauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(startPauseButton.getText().startsWith("S")) {
+                    startPauseButton.setText("Pause");
+                    System.out.println("Start has been clicked!");
+                }else {
+                    startPauseButton.setText("Start");
+                    System.out.println("Pause has been clicked!");
+                }
+            }
+        });
+
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Reset has been clicked!");
+            }
+        });
+
+        buttonPanel.add(startPauseButton);
+        buttonPanel.add(resetButton);
+        this.add(buttonPanel, BorderLayout.PAGE_END);
     }
 
     public class Grid extends JPanel {
