@@ -48,6 +48,7 @@ public class Canvas extends JFrame {
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                startPauseButton.setText("Start");
                 System.out.println("Reset has been clicked!");
             }
         });
