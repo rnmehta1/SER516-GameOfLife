@@ -24,7 +24,6 @@ public class Canvas extends JFrame {
                 cells[x][y] = false;
             }
         }
-
     }
 
     public void setUpButtons(){
