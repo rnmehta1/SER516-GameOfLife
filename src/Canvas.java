@@ -7,8 +7,8 @@ public class Canvas extends JFrame {
     public int my = -100;
     boolean cells[][] = new boolean[40][20];
     int spacing=1;
-
-
+    boolean generationOn = false;
+    int runCount = 0;
     public Canvas() {
         setSize(1440, 900);
         setUpButtons();
@@ -24,6 +24,18 @@ public class Canvas extends JFrame {
                 cells[x][y] = false;
             }
         }
+
+    }
+
+    public void generateNewCells(){
+        System.out.println("Next Generation");
+        for(int i = 0; i < cells.length; i++){
+            for(int j = 0; j < cells[0].length; j++){
+                cells[i][j] = !cells[i][j];
+            }
+        }
+
+        repaint();
     }
 
     public void setUpButtons(){
@@ -38,8 +50,13 @@ public class Canvas extends JFrame {
                 if(startPauseButton.getText().startsWith("S")) {
                     startPauseButton.setText("Pause");
                     System.out.println("Start has been clicked!");
+                    generationOn = true;
+                    runCount++;
+                    if(runCount > 1) generateNewCells();
+
                 }else {
                     startPauseButton.setText("Start");
+                    generationOn = false;
                     System.out.println("Pause has been clicked!");
                 }
             }
@@ -84,7 +101,6 @@ public class Canvas extends JFrame {
     public static void main( String args[] ) {
         Canvas application = new Canvas();
         application.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-
 
     }
 
