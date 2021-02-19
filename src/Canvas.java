@@ -1,30 +1,28 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.concurrent.TimeUnit;
 public class Canvas extends JFrame {
 
     public int mx = -100;
     public int my = -100;
     boolean cells[][] = new boolean[40][20];
-    int spacing=1;
-    boolean generationOn = false;
-    int runCount = 0;
+    int spacing = 1;
+    static int running = 0;
     public Canvas() {
         setSize(1440, 900);
         setUpButtons();
-        setVisible(true);
         Grid grid=new Grid();
         this.add(grid);
         PaintCell paintCell = new PaintCell();
         this.addMouseListener(paintCell);
-        Move move = new Move();
-        this.addMouseMotionListener(move);
+
         for (int x = 0; x < 40; x ++) {
             for (int y = 0; y <20; y ++) {
                 cells[x][y] = false;
             }
         }
-
+        setVisible(true);
     }
 
     public void generateNewCells(){
@@ -65,15 +63,11 @@ public class Canvas extends JFrame {
                 cells[i][j] = nextGrid[i][j];
             }
         }
-
-
-
-        repaint();
     }
 
     public void setUpButtons(){
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setPreferredSize(new Dimension(1440, 200));
+        buttonPanel.setPreferredSize(new Dimension(1440, 100));
         JButton startPauseButton = new JButton("Start");
         JButton resetButton = new JButton("Reset");
 
@@ -83,14 +77,13 @@ public class Canvas extends JFrame {
                 if(startPauseButton.getText().startsWith("S")) {
                     startPauseButton.setText("Pause");
                     System.out.println("Start has been clicked!");
-                    generationOn = true;
-                    runCount++;
-                    if(runCount > 1) generateNewCells();
+                    running=1;
 
                 }else {
                     startPauseButton.setText("Start");
-                    generationOn = false;
+                    running=0;
                     System.out.println("Pause has been clicked!");
+
                 }
             }
         });
@@ -100,6 +93,8 @@ public class Canvas extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 startPauseButton.setText("Start");
                 System.out.println("Reset has been clicked!");
+                new Canvas();
+                running=0;
             }
         });
 
@@ -126,26 +121,19 @@ public class Canvas extends JFrame {
                         g.fillRect(spacing+x*30, spacing+y*30+30, 30-2*spacing, 30-2*spacing);
                     }
                     g.drawRect(spacing+x*30, spacing+y*30+30, 30-2*spacing, 30-2*spacing);
-
                 }
             }
-        }
-    }
-    public static void main( String args[] ) {
-        Canvas application = new Canvas();
-        application.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-
-    }
-
-    public class Move implements MouseMotionListener{
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
+            if(running==1){
+                generateNewCells();
+                repaint();
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else{
+                repaint();
+            }
         }
     }
 
@@ -179,5 +167,4 @@ public class Canvas extends JFrame {
 
         }
     }
-
 }
