@@ -29,11 +29,44 @@ public class Canvas extends JFrame {
 
     public void generateNewCells(){
         System.out.println("Next Generation");
-        for(int i = 0; i < cells.length; i++){
-            for(int j = 0; j < cells[0].length; j++){
-                cells[i][j] = !cells[i][j];
+        boolean [][] nextGrid = new boolean[cells.length][cells[0].length];
+        int [][] dirs = {{-1,-1},{-1,0},{-1,1},{0,-1},{0,0},{0,1},{1,-1},{1,0},{1,1},};
+        for (int i = 1; i < cells.length - 1; i++)
+        {
+            for (int j = 1; j < cells[0].length - 1; j++)
+            {
+                int neighboursTrue = 0;
+
+                for(int [] dir : dirs) {
+                    if (cells[i + dir[1]][j + dir[0]]) {
+                        neighboursTrue++;
+                    }
+                }
+                if(cells[i][j]){
+                    neighboursTrue--;
+                }
+                if (cells[i][j] && neighboursTrue < 2){
+                    nextGrid[i][j] = false;
+                } else if (cells[i][j] && neighboursTrue >= 2){
+                    nextGrid[i][j] = false;
+                } else if (!cells[i][j] && neighboursTrue == 3) {
+                    nextGrid[i][j] = true;
+                } else{
+                    nextGrid[i][j] = cells[i][j];
+                }
+
             }
         }
+
+        for (int i = 1; i < cells.length - 1; i++)
+        {
+            for (int j = 1; j < cells[0].length - 1; j++)
+            {
+                cells[i][j] = nextGrid[i][j];
+            }
+        }
+
+
 
         repaint();
     }
